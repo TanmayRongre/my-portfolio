@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: font1;
+    src: url(../public/fonts/Lausanne-300.woff2);
+}
+
+@font-face {
+    font-family: font2;
+    src: url(../public/fonts/Lausanne-500.woff2);
+}
+
+/* Lenis Smooth Scroll Styles */
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
+.moveX {
+    animation-name: moveAnimation;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.moveLink {
+    opacity: 0;
+    transition: all ease 0.3s;
+}
+
+.link:hover .moveLink {
+    opacity: 1;
+}
+
+@keyframes moveAnimation {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
