@@ -173,7 +173,7 @@ const FullScreenNav = () => {
                             </svg>
                         </a>
                         <a
-                            href='/resume.pdf'
+                            href='https://drive.google.com/file/d/1Rx9B-a1xWv-JIfgRsJS_PI45e3CC1BmN/view?usp=drive_link'
                             target='_blank'
                             rel='noopener noreferrer'
                             className='font-[font1] uppercase text-sm lg:text-base tracking-widest text-white/70 hover:text-[#D3FD50] transition-colors flex items-center gap-1.5'
