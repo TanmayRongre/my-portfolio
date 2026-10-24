@@ -105,7 +105,7 @@ const Loader = () => {
                 <div className='flex items-end gap-3 mt-6'>
                     <span
                         ref={counterRef}
-                        className='font-[font1] text-[#D3FD50] text-6xl tabular-nums leading-none'
+                        className='font-[font1] text-[#F39A27] text-6xl tabular-nums leading-none'
                     >
                         0
                     </span>

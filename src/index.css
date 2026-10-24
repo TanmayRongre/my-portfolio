@@ -2,12 +2,97 @@
 
 @font-face {
     font-family: font1;
-    src: url(/fonts/Lausanne-300.woff2);
+    src: url(/fonts/Lausanne-300.woff2) format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: font2;
-    src: url(/fonts/Lausanne-500.woff2);
+    src: url(/fonts/Lausanne-500.woff2) format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* PP Editorial New */
+@font-face {
+    font-family: 'PP Editorial New';
+    src: url(/fonts/PP-Editorial-new-regular.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PP Editorial New';
+    src: url(/fonts/PP-Editorial-new-italic.woff2) format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font aliases matching project convention */
+@font-face {
+    font-family: font3;
+    src: url(/fonts/PP-Editorial-new-regular.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: font4;
+    src: url(/fonts/PP-Editorial-new-italic.woff2) format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: editorial;
+    src: url(/fonts/PP-Editorial-new-regular.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: editorial-italic;
+    src: url(/fonts/PP-Editorial-new-italic.woff2) format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Text Font */
+@font-face {
+    font-family: 'Text';
+    src: url(/fonts/Text.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: font5;
+    src: url(/fonts/Text.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-font1: font1, sans-serif;
+    --font-font2: font2, sans-serif;
+    --font-font3: font3, serif;
+    --font-font4: font4, serif;
+    --font-font5: font5, sans-serif;
+
+    --font-editorial: 'PP Editorial New', editorial, serif;
+    --font-editorial-italic: editorial-italic, 'PP Editorial New', serif;
+    --font-text: 'Text', font5, sans-serif;
 }
 
 /* Lenis Smooth Scroll Styles */

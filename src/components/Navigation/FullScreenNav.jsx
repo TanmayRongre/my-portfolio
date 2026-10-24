@@ -83,64 +83,77 @@ const FullScreenNav = () => {
                 </div>
             </div>
 
-            <div ref={fullNavLinksRef} className='relative h-full flex flex-col justify-between p-4 lg:p-6 z-10'>
+            <div ref={fullNavLinksRef} className='relative h-full flex flex-col justify-between p-5 sm:p-8 lg:p-12 z-10'>
                 {/* Header bar */}
-                <div className="navlink opacity-0 flex w-full justify-between items-start">
-                    <div>
-                        <div className='lg:w-36 w-24'>
-                            <h1 className="font-[font2] text-[4vw] tracking-tighter">TR.</h1>
+                <div className="navlink opacity-0 flex w-full justify-between items-center">
+                    <div className='flex items-center gap-3 select-none'>
+                        <div className='w-10 h-10 rounded-full border border-white/20 bg-white/[0.03] flex items-center justify-center'>
+                            <span className='font-[font3] text-lg tracking-tight text-white'>
+                                T<span className='font-[font4] italic text-[#F39A27]'>R</span>
+                            </span>
                         </div>
+                        <span className='font-[font5] text-xs tracking-[0.25em] uppercase text-white/60'>
+                            NAVIGATION
+                        </span>
                     </div>
-                    <div onClick={() => {
-                        setNavOpen(false)
-                    }} className='lg:h-32 h-20 w-20 lg:w-32 relative cursor-pointer'>
-                        <div className='lg:h-44 h-28 lg:w-1 w-0.5 -rotate-45 origin-top absolute bg-[#D3FD50]'></div>
-                        <div className='lg:h-44 h-28 lg:w-1 w-0.5 right-0 rotate-45 origin-top absolute bg-[#D3FD50]'></div>
-                    </div>
+
+                    <button
+                        onClick={() => setNavOpen(false)}
+                        className='group flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] hover:border-[#F39A27] hover:bg-[#F39A27]/10 transition-all duration-300 cursor-pointer active:scale-95'
+                        aria-label='Close Menu'
+                    >
+                        <span className='font-[font5] text-xs tracking-[0.22em] uppercase font-semibold text-white/90 group-hover:text-[#F39A27] transition-colors'>
+                            Close
+                        </span>
+                        <div className='relative w-4 h-4 flex items-center justify-center'>
+                            <span className='absolute w-4 h-[1.5px] bg-[#F39A27] rotate-45 transition-transform duration-300 group-hover:rotate-[135deg]' />
+                            <span className='absolute w-4 h-[1.5px] bg-white -rotate-45 transition-transform duration-300 group-hover:rotate-[45deg] group-hover:bg-[#F39A27]' />
+                        </div>
+                    </button>
                 </div>
 
                 {/* Main Nav Links */}
-                <div className='py-2 my-auto'>
-                    <div className='link opacity-0 origin-top relative border-t-1 border-white cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/"); }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[7vw] text-center lg:leading-[0.8] lg:pt-8 pt-3 uppercase'>Home</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
+                <div className='my-auto'>
+                    <div className='link opacity-0 origin-top relative border-t border-white/15 cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/"); }}>
+                        <h1 className='font-[font3] text-5xl lg:text-[6.5vw] text-center lg:leading-[0.95] lg:pt-6 pt-3 uppercase tracking-tight'>Home</h1>
+                        <div className='moveLink absolute text-black flex top-0 bg-[#F39A27]'>
                             <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>About Me</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>About Me</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>About Me</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>About Me</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
                             </div>
                         </div>
                     </div>
-                    <div className='link opacity-0 origin-top relative border-t-1 border-white cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/projects"); }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[7vw] text-center lg:leading-[0.8] lg:pt-8 pt-3 uppercase'>Projets</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
+                    <div className='link opacity-0 origin-top relative border-t border-white/15 cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/projects"); }}>
+                        <h1 className='font-[font3] text-5xl lg:text-[6.5vw] text-center lg:leading-[0.95] lg:pt-6 pt-3 uppercase tracking-tight'>Projects</h1>
+                        <div className='moveLink absolute text-black flex top-0 bg-[#F39A27]'>
                             <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>What I made</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>What I Made</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>What I made</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>What I Made</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
                             </div>
                         </div>
                     </div>
-                    <div className='link opacity-0 origin-top relative border-t-1 border-white cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/services"); }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[7vw] text-center lg:leading-[0.8] lg:pt-8 pt-3 uppercase'>Services</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
+                    <div className='link opacity-0 origin-top relative border-t border-white/15 cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/services"); }}>
+                        <h1 className='font-[font3] text-5xl lg:text-[6.5vw] text-center lg:leading-[0.95] lg:pt-6 pt-3 uppercase tracking-tight'>Services</h1>
+                        <div className='moveLink absolute text-black flex top-0 bg-[#F39A27]'>
                             <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>What i do</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>What I Do</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>What i do</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>What I Do</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
                             </div>
                         </div>
                     </div>
-                    <div className='link opacity-0 origin-top relative border-t-1 border-b-1 border-white cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/contact"); }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[7vw] text-center lg:leading-[0.8] lg:pt-8 pt-3 uppercase'>Contact</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
+                    <div className='link opacity-0 origin-top relative border-t border-b border-white/15 cursor-pointer' onClick={() => { setNavOpen(false); navigateWithTransition("/contact"); }}>
+                        <h1 className='font-[font3] text-5xl lg:text-[6.5vw] text-center lg:leading-[0.95] lg:pt-6 pt-3 uppercase tracking-tight'>Contact</h1>
+                        <div className='moveLink absolute text-black flex top-0 bg-[#F39A27]'>
                             <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>Lets connect</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>Let's Connect</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[7vw] text-5xl text-center lg:leading-[0.8] lg:pt-8 pt-4 uppercase'>Lets connect</h2>
+                                <h2 className='whitespace-nowrap font-[font3] lg:text-[6.5vw] text-5xl text-center lg:leading-[0.8] lg:pt-6 pt-3 uppercase tracking-tight'>Let's Connect</h2>
                                 <img className='lg:h-32 h-14 rounded-full shrink-0 lg:w-96 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
                             </div>
                         </div>
@@ -148,13 +161,13 @@ const FullScreenNav = () => {
                 </div>
 
                 {/* Footer Social Links (LinkedIn, GitHub, Resume) */}
-                <div className='navfooter opacity-0 flex flex-wrap items-center justify-between border-t border-white/20 pt-4 pb-2 px-2'>
+                <div className='navfooter opacity-0 flex flex-wrap items-center justify-between border-t border-white/15 pt-5 pb-2 px-2'>
                     <div className='flex items-center gap-6'>
                         <a
                             href='https://www.linkedin.com/in/tanmayrongre'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='font-[font1] uppercase text-sm lg:text-base tracking-widest text-white/70 hover:text-[#D3FD50] transition-colors flex items-center gap-1.5'
+                            className='font-[font5] uppercase text-xs lg:text-sm tracking-[0.2em] text-white/70 hover:text-[#F39A27] transition-colors flex items-center gap-1.5'
                         >
                             <span>LinkedIn</span>
                             <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
@@ -165,7 +178,7 @@ const FullScreenNav = () => {
                             href='https://github.com/tanmayrongre'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='font-[font1] uppercase text-sm lg:text-base tracking-widest text-white/70 hover:text-[#D3FD50] transition-colors flex items-center gap-1.5'
+                            className='font-[font5] uppercase text-xs lg:text-sm tracking-[0.2em] text-white/70 hover:text-[#F39A27] transition-colors flex items-center gap-1.5'
                         >
                             <span>GitHub</span>
                             <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
@@ -176,7 +189,7 @@ const FullScreenNav = () => {
                             href='https://drive.google.com/file/d/1Rx9B-a1xWv-JIfgRsJS_PI45e3CC1BmN/view?usp=drive_link'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='font-[font1] uppercase text-sm lg:text-base tracking-widest text-white/70 hover:text-[#D3FD50] transition-colors flex items-center gap-1.5'
+                            className='font-[font5] uppercase text-xs lg:text-sm tracking-[0.2em] text-white/70 hover:text-[#F39A27] transition-colors flex items-center gap-1.5'
                         >
                             <span>Resume</span>
                             <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
@@ -185,8 +198,8 @@ const FullScreenNav = () => {
                         </a>
                     </div>
 
-                    <span className='font-mono text-xs text-white/40 uppercase tracking-widest hidden sm:inline-block'>
-                        © 2026 Tanmay Rongre
+                    <span className='font-[font5] text-[10px] text-white/40 uppercase tracking-[0.25em] hidden sm:inline-block'>
+                        © 2026 Tanmay Rongre • All Rights Reserved
                     </span>
                 </div>
             </div>
