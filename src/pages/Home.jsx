@@ -171,40 +171,40 @@ const Home = () => {
       }
     )
 
-    // Scroll Trigger: Project rows entrance
+    // Scroll Trigger: Project rows entrance (Snappy, prompt entrance on scroll)
     const projectRows = gsap.utils.toArray('.project-row')
     projectRows.forEach((row) => {
       gsap.fromTo(
         row,
-        { y: 40, opacity: 0 },
+        { y: 25, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
+          duration: 0.4,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: row,
-            start: 'top 85%',
+            start: 'top 95%',
             toggleActions: 'play none none reverse',
           },
         }
       )
     })
 
-    // Scroll Trigger: Philosophy cards
+    // Scroll Trigger: Philosophy cards (Snappy, prompt entrance on scroll)
     const pillarCards = gsap.utils.toArray('.pillar-card')
     pillarCards.forEach((card) => {
       gsap.fromTo(
         card,
-        { y: 35, opacity: 0 },
+        { y: 20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
+          duration: 0.35,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 88%',
+            start: 'top 95%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -228,11 +228,12 @@ const Home = () => {
       {/* =========================================================================
           FIXED RESPONSIVE STUDIO PORTRAIT
           Enlarged so it goes underneath the "Tanmay Rongre" headline across the chest.
+          Mobile: Sized slightly smaller with top trimmed down while keeping bottom axis intact.
           Fades slowly to opacity 0 on scroll, and reappears on scroll up.
           ========================================================================= */}
       <div
         ref={portraitScrollRef}
-        className='fixed top-[4vh] sm:top-[4vh] lg:top-[4vh] left-1/2 -translate-x-1/2 h-[68vh] sm:h-[72vh] lg:h-[76vh] max-h-[720px] aspect-[3/4] sm:aspect-[4/5] w-auto pointer-events-none z-0 flex items-center justify-center will-change-[opacity,transform]'
+        className='fixed top-[9vh] sm:top-[4vh] left-1/2 -translate-x-1/2 h-[60vh] sm:h-[72vh] lg:h-[76vh] max-h-[500px] sm:max-h-[720px] aspect-[3/4] sm:aspect-[4/5] w-auto pointer-events-none z-0 flex items-center justify-center will-change-[opacity,transform]'
       >
         <div
           ref={portraitEntranceRef}
@@ -244,7 +245,7 @@ const Home = () => {
             className='w-full h-full object-cover object-top filter contrast-[1.04] brightness-[1.02]'
           />
           {/* Subtle Bottom Fade into Base Black */}
-          <div className='pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black via-black/75 to-transparent' />
+          <div className='pointer-events-none absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-black via-black/75 to-transparent' />
         </div>
       </div>
 

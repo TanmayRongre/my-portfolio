@@ -84,7 +84,7 @@ const Navbar = () => {
                                 isDarkPage ? 'text-white' : 'text-black'
                             }`}
                         >
-                            T<span className='font-[font4] italic text-[#F39A27]'>R</span>
+                            T<span className='font-[font3] text-[#F39A27]'>R</span>
                         </span>
                     </div>
 

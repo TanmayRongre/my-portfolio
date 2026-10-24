@@ -6,6 +6,7 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Navbar from './components/Navigation/Navbar'
 import FullScreenNav from './components/Navigation/FullScreenNav'
+import ScrollProgress from './components/common/ScrollProgress'
 import Footer from './components/common/Footer'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -52,6 +53,7 @@ const App = () => {
 
   return (
     <div className='overflow-x-hidden flex flex-col min-h-screen'>
+      <ScrollProgress />
       <Navbar />
       <FullScreenNav />
       <div className='flex-1'>
