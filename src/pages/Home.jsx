@@ -4,15 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { TransitionContext } from '../components/common/Stairs'
 
-// Project preview assets (src/assets/Projects/)
-import hostelHubImg from '../assets/Projects/HostelHub.png'
-import turioImg from '../assets/Projects/Turio.png'
-import devSpaceImg from '../assets/Projects/DevSpace.png'
-import facultyHubImg from '../assets/Projects/FacultyHub.png'
-import elearnImg from '../assets/Projects/ELearn.png'
-import movieImg from '../assets/Projects/MovieRecommnder.png'
-import connectHubImg from '../assets/Projects/connectHub.png'
-import portfolioImg from '../assets/Projects/Portfolio.png'
+import projects from '../data/projects'
 
 
 
@@ -31,124 +23,54 @@ const Home = () => {
   const rightRailRef = useRef(null)
   const centerBottomRef = useRef(null)
 
+  // Horizontal Selected Works Pinned Section Refs
+  const worksPinRef = useRef(null)
+  const worksTrackRef = useRef(null)
+  const row1Ref = useRef(null)
+  const row2Ref = useRef(null)
+  const row3Ref = useRef(null)
+  const row4Ref = useRef(null)
+
   const navigateWithTransition = useContext(TransitionContext)
   const [activeProject, setActiveProject] = useState(0)
 
-  const featuredProjects = [
-    {
-      num: '01',
-      title: 'HostelHub',
-      subtitle: 'MERN Hostel Operations & Gate Pass Engine',
-      category: 'Full-Stack Architecture',
-      description: 'Comprehensive digital hostel management ecosystem featuring QR-based gate check-in/out tracking, automated leave requests, room allocations, and role-based dashboards for students, wardens, and administrators.',
-      image: hostelHubImg,
-      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'QR Pass'],
-      link: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
-      github: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
-    },
-    {
-      num: '02',
-      title: 'Turio',
-      subtitle: 'Interactive Travel & Destination Platform',
-      category: 'Frontend Engineering',
-      description: 'Dynamic, high-performance travel and destination exploration interface featuring curated interactive itineraries, fluid destination guides, immersive showcases, and responsive booking flows.',
-      image: turioImg,
-      tags: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel', 'UI/UX'],
-      link: 'https://turio-theta.vercel.app/',
-      github: 'https://github.com/tanmayrongre/turio',
-    },
-    {
-      num: '03',
-      title: 'DevSpace',
-      subtitle: 'All-in-One MERN Developer Workspace & Collaboration Suite',
-      category: 'Full-Stack Architecture',
-      description: 'Unified developer productivity and portfolio platform featuring interactive Kanban boards, public developer showcases, collaborative project ideation trackers, sticky notes, and a community explore feed for projects and profiles.',
-      image: devSpaceImg,
-      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Kanban'],
-      link: 'https://devspace-sand.vercel.app',
-      github: 'https://github.com/tanmayrongre/devspace',
-    },
-    {
-      num: '04',
-      title: 'FacultyHub',
-      subtitle: 'Smart Academic & Faculty Management System',
-      category: 'Full-Stack Architecture',
-      description: 'Role-based MERN platform built for HODs and faculty to streamline academic operations — featuring batch-wise attendance tracking, PA & practical marks management, leave & substitution workflows, master timetable, campus notices, and Google Sheets data export.',
-      image: facultyHubImg,
-      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Google Sheets API'],
-      link: 'https://github.com/tanmayrongre/FacultyHub',
-      github: 'https://github.com/tanmayrongre/FacultyHub',
-    },
-    {
-      num: '05',
-      title: 'E-Learning Platform',
-      subtitle: 'Interactive LMS & Educational Dashboard',
-      category: 'Frontend & LMS Engineering',
-      description: 'Modern educational platform featuring modular course structures, quiz assessments, student progress analytics, and responsive design.',
-      image: elearnImg,
-      tags: ['React', 'Tailwind CSS', 'GSAP', 'Vercel'],
-      link: 'https://e-learning-platform-six-lilac.vercel.app/',
-      github: 'https://github.com/tanmayrongre/e-learning-platform',
-    },
-    {
-      num: '06',
-      title: 'Movie Recommender',
-      subtitle: 'TMDB Intelligent Discovery Engine',
-      category: 'API & Modern UI',
-      description: 'Smart movie search and recommendation engine powered by TMDB API with real-time query filtering, high-res posters, trailer embeds, and cast insights.',
-      image: movieImg,
-      tags: ['React', 'TMDB API', 'Tailwind CSS', 'GitHub Pages'],
-      link: 'https://tanmayrongre.github.io/movie-recommender/',
-      github: 'https://github.com/tanmayrongre/movie-recommender',
-    },
-    {
-      num: '07',
-      title: 'Connect Hub',
-      subtitle: 'Social Interaction Platform',
-      category: 'Interactive Web',
-      description: 'Dynamic web network enabling creators to connect, publish feed updates, explore community channels, and interact with modern UI components.',
-      image: connectHubImg,
-      tags: ['HTML5/CSS3', 'JavaScript', 'Responsive UI', 'GitHub Pages'],
-      link: 'https://tanmayrongre.github.io/Connect-hub/',
-      github: 'https://github.com/tanmayrongre/Connect-hub',
-    },
-    {
-      num: '08',
-      title: 'Developer Portfolio',
-      subtitle: 'Bespoke Dark Architecture & Motion Showcase',
-      category: 'Creative Direction & Motion',
-      description: 'High-performance interactive portfolio engineered with GSAP scroll storytelling, tailored dark modes, SVG progress rings, luxury typography, and editorial dark aesthetics.',
-      image: portfolioImg,
-      tags: ['React', 'GSAP', 'Tailwind CSS', 'Vercel'],
-      link: 'https://tanmayrongre.github.io/Portfolio/',
-      github: 'https://github.com/tanmayrongre/my-portfolio',
-    },
-  ]
-
+  const featuredProjects = projects
 
   const pillars = [
     {
       index: '01',
-      title: 'Full-Stack Architecture',
-      subtitle: 'Scalable Systems from Database to DOM',
-      text: 'Specializing in robust MERN stack applications with clean RESTful APIs, optimized database schemas, secure authentication, and resilient server-side architectures.',
-      tags: ['Node.js', 'Express', 'MongoDB', 'React', 'REST APIs'],
+      title: 'AI-Assisted Workflow',
+      subtitle: 'Autonomous Agent Pipelines & Rapid Spec Prototyping',
+      text: 'Harnessing advanced LLMs, autonomous coding agents, and AI-accelerated workflows to 10x iteration speed, draft bulletproof architectures, and ship complex production features in record time.',
+      tags: ['AI-Assisted Dev', 'LLM Agent Pipelines', 'Rapid Prototyping', 'Spec Engineering'],
     },
     {
       index: '02',
-      title: 'Creative Motion & Interaction',
-      subtitle: 'Liquid 60FPS Storytelling',
-      text: 'Engineering award-worthy scroll interactions, GSAP physics-driven micro-animations, and fluid transitions that captivate users without compromising performance.',
-      tags: ['GSAP', 'ScrollTrigger', 'Lenis', 'Micro-Interactions', 'CSS3'],
+      title: 'Hands-On Coding Knowledge',
+      subtitle: 'Deep Ground-Truth Engineering from DB to DOM',
+      text: 'AI proposes; rigorous engineering executes. Deep, foundational fluency across JavaScript, React, Node.js runtimes, database indexing, and performance optimization ensures clean, maintainable, production-ready code.',
+      tags: ['MERN Stack', 'Node.js', 'Clean Architecture', 'Debugging', 'Algorithms'],
     },
     {
       index: '03',
-      title: 'UI/UX & Design Precision',
-      subtitle: 'Bespoke Visual Identity',
-      text: 'Harmonizing high-contrast typography, tailored dark modes, subtle glassmorphic depth, and responsive layouts that look museum-grade on every device.',
-      tags: ['Editorial Typography', 'Responsive Design', 'Color Systems', 'Accessibility'],
+      title: 'Creative Motion & Interaction',
+      subtitle: 'Fluid 60FPS Storytelling & High-Performance UI',
+      text: 'Harmonizing high-contrast typography, tailored dark modes, subtle glassmorphic depth, and GSAP physics-driven micro-animations tuned for speed, longevity, and conversion.',
+      tags: ['GSAP', 'ScrollTrigger', 'Lenis', 'Micro-Interactions', 'CSS3'],
     },
   ]
+
+  // Helper to render alternating Amber and White letters across the endless train
+  const renderAlternatingRow = (char, count = 140) => {
+    return Array.from({ length: count }, (_, i) => (
+      <span
+        key={i}
+        className={i % 2 === 0 ? 'text-[#F39A27]' : 'text-white/85'}
+      >
+        {char}{' '}
+      </span>
+    ))
+  }
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -222,25 +144,44 @@ const Home = () => {
       }
     )
 
-    // Scroll Trigger: Project rows entrance (Snappy, prompt entrance on scroll)
-    const projectRows = gsap.utils.toArray('.project-row')
-    projectRows.forEach((row) => {
-      gsap.fromTo(
-        row,
-        { y: 25, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: row,
-            start: 'top 95%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      )
-    })
+    // =========================================================================
+    // HORIZONTAL SCROLL TRIGGER: Pinned "SELECTED WORK" Section
+    // Pinned to viewport, moves projects horizontally right-to-left 1-by-1
+    // with 4 kinetic rows of W - O - R - K in the background
+    // =========================================================================
+    const worksSection = worksPinRef.current
+    const worksTrack = worksTrackRef.current
+
+    if (worksSection && worksTrack) {
+      const getScrollAmount = () => {
+        return Math.max(0, worksTrack.scrollWidth - window.innerWidth)
+      }
+
+      const horizontalTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: worksSection,
+          start: 'top top',
+          end: () => `+=${getScrollAmount() + 500}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 0,
+        },
+      })
+
+      // Move cards right to left
+      horizontalTl.to(worksTrack, {
+        x: () => -getScrollAmount(),
+        ease: 'none',
+      }, 0)
+
+      // Kinetic Parallax on W - O - R - K rows (Smooth subtle motion, never outrunning the train)
+      if (row1Ref.current) horizontalTl.to(row1Ref.current, { x: -400, ease: 'none' }, 0)
+      if (row2Ref.current) horizontalTl.to(row2Ref.current, { x: 300, ease: 'none' }, 0)
+      if (row3Ref.current) horizontalTl.to(row3Ref.current, { x: -400, ease: 'none' }, 0)
+      if (row4Ref.current) horizontalTl.to(row4Ref.current, { x: 300, ease: 'none' }, 0)
+    }
 
     // Scroll Trigger: Philosophy cards (Snappy, prompt entrance on scroll)
     const pillarCards = gsap.utils.toArray('.pillar-card')
@@ -305,11 +246,11 @@ const Home = () => {
           ========================================================================= */}
       <section
         ref={heroRef}
-        className='relative h-[100dvh] max-h-screen w-full flex flex-col justify-between pt-16 sm:pt-18 lg:pt-20 pb-4 overflow-hidden z-10'
+        className='relative h-screen w-full flex flex-col justify-between pt-16 sm:pt-18 lg:pt-20 pb-4 overflow-hidden z-10'
       >
         {/* 3-Column Grid Container */}
         <div className='relative z-10 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 h-full'>
-          
+
           {/* ----------------- LEFT RAIL ----------------- */}
           <div
             ref={leftRailRef}
@@ -319,7 +260,7 @@ const Home = () => {
             <div className='flex items-center gap-2'>
               <span className='w-2 h-2 rounded-full bg-[#F39A27] animate-pulse shrink-0' />
               <span className='tracking-[0.2em] uppercase text-white/80 font-medium text-[11px] xl:text-xs'>
-                ENGINEER. DEVELOPER. BUILDER.
+                AI WORKFLOW · DEEP CODE
               </span>
             </div>
 
@@ -351,7 +292,7 @@ const Home = () => {
 
           {/* ----------------- CENTER STAGE (Hero Content Fitted in 1 Frame) ----------------- */}
           <div className='lg:col-span-8 flex flex-col justify-between items-center text-center px-4 sm:px-6 lg:px-8 py-1 sm:py-2 h-full'>
-            
+
             {/* Mobile Top Row (Status for Mobile/Tablet) */}
             <div className='lg:hidden flex items-center justify-between w-full pb-2 border-b border-white/10'>
               <div className='flex items-center gap-2'>
@@ -367,13 +308,7 @@ const Home = () => {
 
             {/* Center Content Group: Precisely Anchored to Chest Level */}
             <div className='w-full flex-1 flex flex-col items-center justify-end pb-2 sm:pb-3'>
-              
-              {/* Kicker Subtitle (Sits at upper chest level) */}
-              <div ref={kickerRef} className='relative z-10 pb-1'>
-                <p className='font-[font5] text-[10px] sm:text-xs tracking-[0.35em] uppercase text-white/60 font-medium'>
-                  A SYSTEMIC PERSPECTIVE ON TECHNOLOGY
-                </p>
-              </div>
+
 
               {/* Monumental Headline: "Tanmay" (Font 3 Regular) + "Rongre" (Font 4 Italic) */}
               {/* Sits right across chest level on all viewport sizes */}
@@ -389,11 +324,10 @@ const Home = () => {
               </div>
 
               {/* 2-Line Bio */}
-              <div ref={bioRef} className='relative z-10 mt-2.5 sm:mt-3.5 max-w-lg mx-auto px-4'>
-                <p className='font-[font5] text-xs sm:text-sm lg:text-[15px] text-white/70 leading-relaxed font-normal'>
-                  I build products, engineer scalable architectures,
-                  <br className='hidden sm:block' />
-                  and craft interactive digital experiences.
+              <div ref={bioRef} className='relative z-10 mt-2.5 sm:mt-3.5 max-w-xl mx-auto px-4'>
+                <p className='font-[font5] text-xs sm:text-sm lg:text-[15px] text-white/80 leading-relaxed font-normal'>
+                  I build high-impact products by combining
+                  <span className='text-white font-medium'> AI-assisted workflow</span> with <span className='text-[#F39A27] font-medium'>hands-on coding knowledge</span> to engineer scalable architectures.
                 </p>
               </div>
 
@@ -413,7 +347,11 @@ const Home = () => {
 
                 {/* Start a conversation link */}
                 <button
-                  onClick={() => navigateWithTransition('/contact')}
+                  onClick={() => {
+                    const el = document.getElementById('contact')
+                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                    else window.location.href = 'mailto:tanmayrongre2008@gmail.com'
+                  }}
                   className='group inline-flex items-center gap-2 text-white/80 hover:text-[#F39A27] font-[font5] text-[11px] sm:text-xs tracking-[0.15em] uppercase px-4 py-2.5 sm:py-3 border-b border-transparent hover:border-[#F39A27] transition-all duration-300 cursor-pointer'
                 >
                   <span>Start a conversation</span>
@@ -423,10 +361,10 @@ const Home = () => {
 
             </div>
 
-            {/* Center Bottom: Building & Engineering Since 2023 */}
+            {/* Center Bottom: Tagline */}
             <div ref={centerBottomRef} className='pt-2 sm:pt-3 text-center'>
-              <span className='font-[font5] text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-[#F39A27]/90 font-medium'>
-                BUILDING & ENGINEERING SINCE 2023
+              <span className='font-[font5] text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-[#F39A27]/90 font-medium'>
+                AI-ASSISTED WORKFLOW · HANDS-ON CODING KNOWLEDGE
               </span>
             </div>
 
@@ -470,130 +408,139 @@ const Home = () => {
       </section>
 
       {/* =========================================================================
-          SECTION 2: FEATURED SELECTED WORKS (Smoothly Scrolled Down To)
-          Opaque base black background so the faded photo is cleanly masked.
+          SECTION 2: PINNED HORIZONTAL "SELECTED WORK" SECTION (W-O-R-K Backdrop)
+          Pinnned stuck after hero section.
+          Background: 4 equal rows (W, O, R, K) in bold iconic typography.
+          Projects slide horizontally from right to left 1 by 1 on scroll.
           ========================================================================= */}
       <section
         id='selected-works'
-        className='relative z-20 py-24 sm:py-32 px-5 sm:px-8 lg:px-16 border-t border-white/10 bg-[#050505]'
+        ref={worksPinRef}
+        className='relative z-20 h-screen w-full bg-[#080808] overflow-hidden select-none'
       >
-        {/* Section Header */}
-        <div className='flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-16'>
-          <div>
-            <div className='inline-block font-[font5] text-xs uppercase tracking-[0.3em] text-[#F39A27] mb-2'>
-              [ CURATED PORTFOLIO ]
+        {/* =====================================================================
+            BACKGROUND: 4 REFINED ARCHITECTURAL ROWS (W - O - R - K)
+            Swiss Modernist Lausanne typography with generous breathing room (tracking-[0.28em]),
+            refined medium weight, architectural opacity, and seamless 160-repetition train.
+            ===================================================================== */}
+        <div className='absolute inset-x-0 bottom-0 top-16 sm:top-20 grid grid-rows-4 w-full pointer-events-none select-none z-0 overflow-hidden'>
+
+          {/* Row 1: W (Alternating Amber & White) */}
+          <div className='h-full w-full flex items-center overflow-hidden '>
+            <div
+              ref={row1Ref}
+              className='whitespace-nowrap font-[font2] font-medium text-[13vh] sm:text-[15vh] leading-none tracking-[0.28em] will-change-transform pl-4 select-none'
+            >
+              {renderAlternatingRow('W', 150)}
             </div>
-            <h2 className='font-[font3] text-4xl sm:text-5xl lg:text-7xl uppercase tracking-tight text-white'>
-              Selected Works
-            </h2>
           </div>
-          <p className='font-[font4] italic text-lg sm:text-xl text-white/60 max-w-md'>
-            *Engineered with precision, built for high performance, and designed to inspire.*
-          </p>
+
+          {/* Row 2: O (Alternating Amber & White) */}
+          <div className='h-full w-full flex items-center overflow-hidden '>
+            <div
+              ref={row2Ref}
+              className='whitespace-nowrap font-[font2] font-medium text-[13vh] sm:text-[15vh] leading-none tracking-[0.28em] will-change-transform -ml-[900px] select-none'
+            >
+              {renderAlternatingRow('O', 150)}
+            </div>
+          </div>
+
+          {/* Row 3: R (Alternating Amber & White) */}
+          <div className='h-full w-full flex items-center overflow-hidden' >
+            <div
+              ref={row3Ref}
+              className='whitespace-nowrap font-[font2] font-medium text-[13vh] sm:text-[15vh] leading-none tracking-[0.28em] will-change-transform pl-8 select-none'
+            >
+              {renderAlternatingRow('R', 150)}
+            </div>
+          </div>
+
+          {/* Row 4: K (Alternating Amber & White) */}
+          <div className='h-full w-full flex items-center overflow-hidden'>
+            <div
+              ref={row4Ref}
+              className='whitespace-nowrap font-[font2] font-medium text-[13vh] sm:text-[15vh] leading-none tracking-[0.28em] will-change-transform -ml-[900px] select-none'
+            >
+              {renderAlternatingRow('K', 150)}
+            </div>
+          </div>
+
         </div>
 
-        {/* Project Cards List */}
-        <div className='flex flex-col gap-8'>
-          {featuredProjects.map((item, idx) => (
-            <div
-              key={idx}
-              onMouseEnter={() => setActiveProject(idx)}
-              className={`project-row group relative rounded-3xl p-6 sm:p-8 lg:p-10 transition-all duration-500 border ${
-                activeProject === idx
-                  ? 'bg-gradient-to-r from-[#12100d] to-[#0a0a0a] border-[#F39A27]/50 shadow-[0_15px_40px_rgba(243,154,39,0.1)]'
-                  : 'bg-white/[0.015] border-white/10 hover:border-white/20'
-              }`}
-            >
-              <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
-                
-                {/* Left: Number & Meta */}
-                <div className='lg:col-span-1 flex flex-row lg:flex-col items-center lg:items-start justify-between'>
-                  <span className='font-[font3] text-3xl sm:text-4xl text-[#F39A27] font-bold'>
-                    {item.num}
-                  </span>
-                  <span className='font-[font5] text-[11px] uppercase tracking-widest text-white/40 mt-2'>
-                    {item.category}
-                  </span>
-                </div>
+        {/* =====================================================================
+            TOP TECH BADGE: ARCHIVE // 08 PRODUCTION BUILDS
+            Minimalist, tech-precision status pill with glowing amber dot
+            ===================================================================== */}
+        <div className='absolute top-20 sm:top-22 left-1/2 -translate-x-1/2 z-30 pointer-events-none'>
+          <div className='inline-flex items-center gap-2.5 px-4 sm:px-5 py-1.5 rounded-md bg-[#0e0e0e]/95 backdrop-blur-md border border-white/10 text-white font-[font3] text-xs sm:text-[13px] tracking-[0.2em] uppercase shadow-2xl'>
+            <span className='w-1.5 h-1.5 rounded-full bg-[#F39A27] animate-pulse shrink-0' />
+            <span>ARCHIVE // {featuredProjects.length} PRODUCTION BUILDS</span>
+          </div>
+        </div>
 
-                {/* Middle: Title & Description */}
-                <div className='lg:col-span-6 flex flex-col gap-3'>
-                  <h3 className='font-[font3] text-2xl sm:text-3xl lg:text-4xl uppercase text-white group-hover:text-[#F39A27] transition-colors'>
-                    {item.title}
-                  </h3>
-                  <p className='font-[font4] italic text-base sm:text-lg text-white/80'>
-                    {item.subtitle}
-                  </p>
-                  <p className='font-[font5] text-sm text-white/60 leading-relaxed max-w-xl'>
-                    {item.description}
-                  </p>
-                  
-                  {/* Tags */}
-                  <div className='flex flex-wrap gap-2 pt-2'>
-                    {item.tags.map((t, i) => (
-                      <span
-                        key={i}
-                        className='font-[font5] text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70'
-                      >
-                        {t}
-                      </span>
-                    ))}
+        {/* =====================================================================
+            HORIZONTAL TRACK: PRECISION-ENGINEERED TECH CARDS
+            Compact size, tight refined corners (rounded-xl), zero blur,
+            smooth hover pickup with subtle amber edge reflection.
+            ===================================================================== */}
+        <div className='relative z-10 h-full w-full flex items-center overflow-hidden pt-16 sm:pt-20'>
+          <div
+            ref={worksTrackRef}
+            className='flex items-center gap-7 sm:gap-10 lg:gap-12 pl-[66vw] sm:pl-[77vw] md:pl-[83vw] lg:pl-[calc(100vw-210px)] pr-[35vw] will-change-transform'
+          >
+            {featuredProjects.map((item, idx) => (
+              <div
+                key={item.id || idx}
+                onClick={() => window.open(item.link || item.github, '_blank')}
+                className='shrink-0 w-[74vw] sm:w-[52vw] md:w-[40vw] lg:w-[32vw] xl:w-[26vw] max-w-[420px] group relative rounded-xl sm:rounded-2xl p-2.5 sm:p-3 bg-[#0d0d0d] border border-white shadow-[0_30px_90px_rgba(0,0,0,0.95)] transform-gpu will-change-transform transition-transform duration-150 ease-out hover:-translate-y-2.5 flex flex-col justify-between overflow-hidden cursor-pointer pointer-events-auto'
+              >
+                {/* Exact Aspect Ratio Viewport (1903x982 browser screenshots, 100% uncropped) */}
+                <div className='relative w-full aspect-[1903/982] rounded-lg overflow-hidden bg-[#050505]  flex items-center justify-center shadow-md'>
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className='w-full h-full object-contain object-center'
+                  />
+
+                  {/* Crisp White Tech Index Tag Top-Left */}
+                  <div className='absolute top-2 left-2 px-2.5 py-0.5 rounded bg-white text-black font-[font5] text-[9px] tracking-widest font-bold shadow-md'>
+                    {item.num || `0${idx + 1}`}
                   </div>
 
-                  {/* Links */}
-                  <div className='flex items-center gap-5 pt-4'>
-                    <a
-                      href={item.link}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='inline-flex items-center gap-2 font-[font5] text-xs uppercase tracking-widest text-[#F39A27] hover:text-white transition-colors font-semibold'
-                    >
-                      <span>Live Platform</span>
-                      <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5'>
-                        <path d='M7 17L17 7M17 7H7M17 7v10' />
-                      </svg>
-                    </a>
-                    <a
-                      href={item.github}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='inline-flex items-center gap-2 font-[font5] text-xs uppercase tracking-widest text-white/50 hover:text-white transition-colors'
-                    >
-                      <span>Source Code</span>
-                      <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-                        <path d='M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22' />
-                      </svg>
-                    </a>
+                  {/* Corner Quick Action Badge */}
+                  <div className='absolute bottom-2 right-2 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150'>
+                    <span className='px-3 py-1 rounded bg-white text-black hover:bg-[#F39A27] font-[font5] text-[9px] uppercase tracking-wider font-bold shadow-lg transition-colors'>
+                      OPEN ↗
+                    </span>
                   </div>
                 </div>
 
-                {/* Right: Project Screenshot Preview */}
-                <div className='lg:col-span-5'>
-                  <div className='relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#F39A27]/40 transition-colors shadow-2xl bg-[#090909]'>
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className='w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105'
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent' />
+                {/* Tech Metadata Chassis Strip */}
+                <div className='w-full mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between select-none'>
+
+                  {/* Left: Brand Dot + Title */}
+                  <div className='flex items-center gap-2'>
+                    <span className='w-1.5 h-1.5 rounded-full bg-[#F39A27] shrink-0' />
+                    <span className='font-[font2] text-xs sm:text-[13px] tracking-wide uppercase text-white group-hover:text-[#F39A27] transition-colors truncate max-w-[170px] sm:max-w-[190px] font-medium'>
+                      {item.title}
+                    </span>
                   </div>
+
+                  {/* Right: Crisp White Pill with Amber Accent */}
+                  <div className='flex items-center gap-1 shrink-0'>
+                    <span className='font-[font5] text-[9px] font-semibold tracking-wider uppercase text-white/90 bg-white/[0.08] border border-white/20 px-2 py-0.5 rounded'>
+                      {item.tags?.[0] || 'MERN'}
+                    </span>
+                    <span className='text-[#F39A27] font-bold text-xs ml-0.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5'>↗</span>
+                  </div>
+
                 </div>
 
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* View All Projects Button */}
-        <div className='mt-14 text-center'>
-          <button
-            onClick={() => navigateWithTransition('/projects')}
-            className='group inline-flex items-center gap-3 border border-white/20 hover:border-[#F39A27] px-8 py-4 rounded-full font-[font5] uppercase text-xs tracking-[0.25em] text-white hover:text-[#F39A27] transition-all duration-300 cursor-pointer'
-          >
-            <span>View All Works in Archive</span>
-            <span className='transition-transform duration-300 group-hover:translate-x-1.5'>→</span>
-          </button>
-        </div>
       </section>
 
       {/* =========================================================================
@@ -653,12 +600,12 @@ const Home = () => {
           SECTION 4: MONUMENTAL CLOSING BANNER
           Clean Black background without amber balls
           ========================================================================= */}
-      <section className='relative z-20 py-28 sm:py-36 px-5 sm:px-8 lg:px-16 border-t border-white/10 bg-black overflow-hidden'>
+      <section id='contact' className='relative z-20 py-28 sm:py-36 px-5 sm:px-8 lg:px-16 border-t border-white/10 bg-black overflow-hidden'>
         <div className='relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center gap-6'>
-          <div className='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-[#F39A27]/30'>
+          <div className='inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-[#F39A27]/30'>
             <span className='w-2 h-2 rounded-full bg-[#F39A27]' />
-            <span className='font-[font5] text-xs uppercase tracking-[0.25em] text-[#F39A27]'>
-              Initiate Collaboration
+            <span className='font-[font5] text-xs uppercase tracking-[0.22em] text-[#F39A27] font-semibold'>
+              AI-ASSISTED WORKFLOW · HANDS-ON CODING KNOWLEDGE
             </span>
           </div>
 
@@ -676,15 +623,15 @@ const Home = () => {
 
           {/* Action Row */}
           <div className='flex flex-wrap items-center justify-center gap-4 pt-6'>
-            <button
-              onClick={() => navigateWithTransition('/contact')}
+            <a
+              href='mailto:tanmayrongre2008@gmail.com'
               className='group inline-flex items-center gap-3 bg-[#F39A27] text-black font-[font5] uppercase text-xs sm:text-sm font-bold tracking-[0.2em] px-10 py-5 rounded-full transition-all duration-300 hover:bg-white hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_30px_rgba(243,154,39,0.3)] cursor-pointer'
             >
               <span>Start A Project</span>
               <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' className='transition-transform duration-300 group-hover:translate-x-1'>
                 <path d='M7 17L17 7M17 7H7M17 7v10' />
               </svg>
-            </button>
+            </a>
 
             <a
               href='mailto:tanmayrongre2008@gmail.com'
