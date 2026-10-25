@@ -1,14 +1,20 @@
-import React, { useRef, useContext, useState } from 'react'
+﻿import React, { useRef, useContext, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { TransitionContext } from '../components/common/Stairs'
 
-// Project preview assets
+// Project preview assets (src/assets/Projects/)
+import hostelHubImg from '../assets/Projects/HostelHub.png'
 import turioImg from '../assets/Projects/Turio.png'
+import devSpaceImg from '../assets/Projects/DevSpace.png'
+import facultyHubImg from '../assets/Projects/FacultyHub.png'
 import elearnImg from '../assets/Projects/ELearn.png'
 import movieImg from '../assets/Projects/MovieRecommnder.png'
 import connectHubImg from '../assets/Projects/connectHub.png'
+import portfolioImg from '../assets/Projects/Portfolio.png'
+
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,49 +37,94 @@ const Home = () => {
   const featuredProjects = [
     {
       num: '01',
-      title: 'Turio',
-      subtitle: 'MERN Travel & Booking Engine',
+      title: 'HostelHub',
+      subtitle: 'MERN Hostel Operations & Gate Pass Engine',
       category: 'Full-Stack Architecture',
-      description: 'Comprehensive travel and destination platform built with the MERN stack, offering dynamic itineraries, interactive guides, and streamlined booking flows.',
+      description: 'Comprehensive digital hostel management ecosystem featuring QR-based gate check-in/out tracking, automated leave requests, room allocations, and role-based dashboards for students, wardens, and administrators.',
+      image: hostelHubImg,
+      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'QR Pass'],
+      link: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
+      github: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
+    },
+    {
+      num: '02',
+      title: 'Turio',
+      subtitle: 'Interactive Travel & Destination Platform',
+      category: 'Frontend Engineering',
+      description: 'Dynamic, high-performance travel and destination exploration interface featuring curated interactive itineraries, fluid destination guides, immersive showcases, and responsive booking flows.',
       image: turioImg,
-      tags: ['MERN', 'MongoDB', 'Node.js', 'Vercel'],
+      tags: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel', 'UI/UX'],
       link: 'https://turio-theta.vercel.app/',
       github: 'https://github.com/tanmayrongre/turio',
     },
     {
-      num: '02',
-      title: 'E-Learning',
-      subtitle: 'Interactive LMS & Dashboard',
-      category: 'Frontend Engineering',
+      num: '03',
+      title: 'DevSpace',
+      subtitle: 'All-in-One MERN Developer Workspace & Collaboration Suite',
+      category: 'Full-Stack Architecture',
+      description: 'Unified developer productivity and portfolio platform featuring interactive Kanban boards, public developer showcases, collaborative project ideation trackers, sticky notes, and a community explore feed for projects and profiles.',
+      image: devSpaceImg,
+      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Kanban'],
+      link: 'https://devspace-sand.vercel.app',
+      github: 'https://github.com/tanmayrongre/devspace',
+    },
+    {
+      num: '04',
+      title: 'FacultyHub',
+      subtitle: 'Smart Academic & Faculty Management System',
+      category: 'Full-Stack Architecture',
+      description: 'Role-based MERN platform built for HODs and faculty to streamline academic operations — featuring batch-wise attendance tracking, PA & practical marks management, leave & substitution workflows, master timetable, campus notices, and Google Sheets data export.',
+      image: facultyHubImg,
+      tags: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Google Sheets API'],
+      link: 'https://github.com/tanmayrongre/FacultyHub',
+      github: 'https://github.com/tanmayrongre/FacultyHub',
+    },
+    {
+      num: '05',
+      title: 'E-Learning Platform',
+      subtitle: 'Interactive LMS & Educational Dashboard',
+      category: 'Frontend & LMS Engineering',
       description: 'Modern educational platform featuring modular course structures, quiz assessments, student progress analytics, and responsive design.',
       image: elearnImg,
-      tags: ['React', 'Tailwind', 'GSAP', 'Vercel'],
+      tags: ['React', 'Tailwind CSS', 'GSAP', 'Vercel'],
       link: 'https://e-learning-platform-six-lilac.vercel.app/',
       github: 'https://github.com/tanmayrongre/e-learning-platform',
     },
     {
-      num: '03',
+      num: '06',
       title: 'Movie Recommender',
       subtitle: 'TMDB Intelligent Discovery Engine',
       category: 'API & Modern UI',
-      description: 'Smart movie search and recommendation engine powered by TMDB API with real-time query filtering, high-res posters, and cast insights.',
+      description: 'Smart movie search and recommendation engine powered by TMDB API with real-time query filtering, high-res posters, trailer embeds, and cast insights.',
       image: movieImg,
-      tags: ['React', 'TMDB API', 'GitHub Pages'],
+      tags: ['React', 'TMDB API', 'Tailwind CSS', 'GitHub Pages'],
       link: 'https://tanmayrongre.github.io/movie-recommender/',
       github: 'https://github.com/tanmayrongre/movie-recommender',
     },
     {
-      num: '04',
+      num: '07',
       title: 'Connect Hub',
       subtitle: 'Social Interaction Platform',
       category: 'Interactive Web',
       description: 'Dynamic web network enabling creators to connect, publish feed updates, explore community channels, and interact with modern UI components.',
       image: connectHubImg,
-      tags: ['HTML5/CSS3', 'JavaScript', 'GitHub Pages'],
+      tags: ['HTML5/CSS3', 'JavaScript', 'Responsive UI', 'GitHub Pages'],
       link: 'https://tanmayrongre.github.io/Connect-hub/',
       github: 'https://github.com/tanmayrongre/Connect-hub',
     },
+    {
+      num: '08',
+      title: 'Developer Portfolio',
+      subtitle: 'Bespoke Dark Architecture & Motion Showcase',
+      category: 'Creative Direction & Motion',
+      description: 'High-performance interactive portfolio engineered with GSAP scroll storytelling, tailored dark modes, SVG progress rings, luxury typography, and editorial dark aesthetics.',
+      image: portfolioImg,
+      tags: ['React', 'GSAP', 'Tailwind CSS', 'Vercel'],
+      link: 'https://tanmayrongre.github.io/Portfolio/',
+      github: 'https://github.com/tanmayrongre/my-portfolio',
+    },
   ]
+
 
   const pillars = [
     {
@@ -518,11 +569,11 @@ const Home = () => {
 
                 {/* Right: Project Screenshot Preview */}
                 <div className='lg:col-span-5'>
-                  <div className='relative w-full h-[200px] sm:h-[240px] lg:h-[260px] rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#F39A27]/40 transition-colors shadow-xl'>
+                  <div className='relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#F39A27]/40 transition-colors shadow-2xl bg-[#090909]'>
                     <img
                       src={item.image}
                       alt={item.title}
-                      className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
+                      className='w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105'
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent' />
                   </div>

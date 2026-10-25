@@ -177,14 +177,14 @@ const Contact = () => {
             {/* Response Badges */}
             <div className='flex flex-wrap items-center gap-6 sm:gap-10 font-[font5] text-[11px] sm:text-xs tracking-[0.2em] uppercase text-white/50 border-t lg:border-t-0 border-white/10 pt-4 lg:pt-0'>
               <div>
-                <span className='text-white font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
+                <span className=' font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
                   &lt;24H
                 </span>
                 <span>RESPONSE GUARANTEE</span>
               </div>
               <span className='hidden sm:block w-[1px] h-5 bg-white/20' />
               <div>
-                <span className='text-white font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
+                <span className='font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
                   GLOBAL
                 </span>
                 <span>REMOTE & CONTRACT</span>

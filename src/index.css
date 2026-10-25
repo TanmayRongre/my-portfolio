@@ -128,7 +128,8 @@ html.lenis, html.lenis body {
     transition: all ease 0.3s;
 }
 
-.link:hover .moveLink {
+.link:hover .moveLink,
+.link-item:hover .moveLink {
     opacity: 1;
 }
 

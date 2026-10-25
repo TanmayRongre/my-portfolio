@@ -152,7 +152,6 @@ const Navbar = () => {
                             </span>
                         </div>
                         <div className='hidden sm:flex items-center gap-1.5'>
-                            <span className='w-1.5 h-1.5 rounded-full bg-[#F39A27] animate-pulse' />
                             <span
                                 className={`font-[font5] text-[9px] tracking-[0.25em] uppercase font-medium ${
                                     isDarkPage ? 'text-white/40' : 'text-black/40'

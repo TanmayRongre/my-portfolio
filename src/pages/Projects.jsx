@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react'
+import { useState, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import ProjectCard from '../components/projects/ProjectCard'
 import ProjectDetailModal from '../components/projects/ProjectDetailModal'
@@ -6,12 +6,14 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
 
+import hostelHubImg from '../assets/Projects/HostelHub.png'
+import turioImg from '../assets/Projects/Turio.png'
+import devSpaceImg from '../assets/Projects/DevSpace.png'
+import facultyHubImg from '../assets/Projects/FacultyHub.png'
 import elearnImg from '../assets/Projects/ELearn.png'
 import movieImg from '../assets/Projects/MovieRecommnder.png'
 import connectHubImg from '../assets/Projects/connectHub.png'
-import turioImg from '../assets/Projects/Turio.png'
 import portfolioImg from '../assets/Projects/Portfolio.png'
-import oldPortfolioImg from '../assets/Projects/OldPortfolio.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -21,12 +23,49 @@ const Projects = () => {
   const subtitleRef = useRef(null)
   const headerMetaRef = useRef(null)
   const [selectedProject, setSelectedProject] = useState(null)
-  const [activeFilter, setActiveFilter] = useState('ALL')
 
   const projects = [
     {
       rowNum: '01',
-      category: 'ENTERPRISE & LMS',
+      category: 'FULL-STACK & TRAVEL ARCHITECTURE',
+      image1: hostelHubImg,
+      title1: 'HostelHub',
+      tags1: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'QR Pass'],
+      category1: 'Full-Stack Architecture',
+      description1: 'Comprehensive digital hostel management ecosystem featuring QR-based gate check-in/out tracking, automated leave requests, room allocations, and role-based dashboards for students, wardens, and administrators.',
+      link1: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
+      github1: 'https://github.com/tanmayrongre/hackthon-mountreach-2026',
+
+      image2: turioImg,
+      title2: 'Turio',
+      tags2: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel', 'UI/UX'],
+      category2: 'Frontend Engineering',
+      description2: 'Dynamic, high-performance travel and destination exploration interface featuring curated interactive itineraries, fluid destination guides, immersive showcases, and responsive booking flows.',
+      link2: 'https://turio-theta.vercel.app/',
+      github2: 'https://github.com/tanmayrongre/turio',
+    },
+    {
+      rowNum: '02',
+      category: 'DEVELOPER COLLABORATION & ACADEMIC SUITES',
+      image1: devSpaceImg,
+      title1: 'DevSpace',
+      tags1: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Kanban'],
+      category1: 'Full-Stack Architecture',
+      description1: 'Unified developer productivity and portfolio platform featuring interactive Kanban boards, public developer showcases, collaborative project ideation trackers, sticky notes, and a community explore feed for projects and profiles.',
+      link1: 'https://devspace-sand.vercel.app',
+      github1: 'https://github.com/tanmayrongre/devspace',
+
+      image2: facultyHubImg,
+      title2: 'FacultyHub',
+      tags2: ['MERN', 'MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Google Sheets API'],
+      category2: 'Full-Stack Architecture',
+      description2: 'Role-based MERN platform built for HODs and faculty to streamline academic operations — featuring batch-wise attendance tracking, PA & practical marks management, leave & substitution workflows, master timetable, campus notices, and Google Sheets data export.',
+      link2: 'https://github.com/tanmayrongre/FacultyHub',
+      github2: 'https://github.com/tanmayrongre/FacultyHub',
+    },
+    {
+      rowNum: '03',
+      category: 'ENTERPRISE & DISCOVERY ENGINES',
       image1: elearnImg,
       title1: 'E-Learning Platform',
       tags1: ['React', 'Tailwind', 'GSAP', 'Vercel'],
@@ -44,8 +83,8 @@ const Projects = () => {
       github2: 'https://github.com/tanmayrongre/movie-recommender',
     },
     {
-      rowNum: '02',
-      category: 'SOCIAL & TRAVEL ARCHITECTURE',
+      rowNum: '04',
+      category: 'SOCIAL WEB & DIGITAL IDENTITY',
       image1: connectHubImg,
       title1: 'Connect Hub',
       tags1: ['HTML5/CSS3', 'JavaScript', 'GitHub Pages'],
@@ -54,45 +93,17 @@ const Projects = () => {
       link1: 'https://tanmayrongre.github.io/Connect-hub/',
       github1: 'https://github.com/tanmayrongre/Connect-hub',
 
-      image2: turioImg,
-      title2: 'Turio',
-      tags2: ['MERN', 'MongoDB', 'Node.js', 'Vercel'],
-      category2: 'Full-Stack Architecture',
-      description2: 'Comprehensive travel & destination booking engine built on the MERN stack with dynamic itineraries, interactive guides, secure APIs, and streamlined reservation workflows.',
-      link2: 'https://turio-theta.vercel.app/',
-      github2: 'https://github.com/tanmayrongre/turio',
-    },
-    {
-      rowNum: '03',
-      category: 'DIGITAL IDENTITY & EXPERIMENTAL',
-      image1: portfolioImg,
-      title1: 'Portfolio (Current)',
-      tags1: ['React', 'GSAP', 'Tailwind', 'Vercel'],
-      category1: 'Creative Direction & Motion',
-      description1: 'High-performance interactive portfolio engineered with GSAP scroll storytelling, custom canvas particle physics, luxury typography, and editorial dark aesthetics.',
-      link1: 'https://tanmayrongre.github.io/Portfolio/',
-      github1: 'https://github.com/tanmayrongre/my-portfolio',
-
-      image2: oldPortfolioImg,
-      title2: 'Portfolio (Classic)',
-      tags2: ['React', 'CSS3', 'GitHub Pages'],
-      category2: 'Web Foundations',
-      description2: 'First iteration portfolio showcasing core web developer foundations, responsive architecture, and interactive interface components.',
+      image2: portfolioImg,
+      title2: 'Portfolio (Current)',
+      tags2: ['React', 'GSAP', 'Tailwind', 'Vercel'],
+      category2: 'Creative Direction & Motion',
+      description2: 'High-performance interactive portfolio engineered with GSAP scroll storytelling, custom canvas particle physics, luxury typography, and editorial dark aesthetics.',
       link2: 'https://tanmayrongre.github.io/Portfolio/',
-      github2: 'https://github.com/tanmayrongre/Portfolio',
+      github2: 'https://github.com/tanmayrongre/my-portfolio',
     },
   ]
 
-  const filterTabs = ['ALL', 'FULL-STACK', 'REACT & NEXT', 'APIs & TOOLS']
 
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === 'ALL') return projects
-    return projects.filter(p => {
-      const match1 = p.tags1.some(t => t.toUpperCase().includes(activeFilter.replace('& NEXT', '').replace('& TOOLS', '').trim()))
-      const match2 = p.tags2.some(t => t.toUpperCase().includes(activeFilter.replace('& NEXT', '').replace('& TOOLS', '').trim()))
-      return match1 || match2
-    })
-  }, [activeFilter])
 
   useGSAP(
     () => {
@@ -119,27 +130,22 @@ const Projects = () => {
         '-=0.6'
       )
 
-      // 2. Project Cards: Height expand on scroll
-      const cards = gsap.utils.toArray('.hero-card')
+      // 2. Project Rows: Clean upward fade-in entrance
+      const rows = gsap.utils.toArray('.project-row-group')
 
-      cards.forEach((card) => {
+      rows.forEach((row) => {
         gsap.fromTo(
-          card,
+          row,
+          { y: 30, opacity: 0 },
           {
-            height: window.innerWidth < 1024 ? 'auto' : '100px',
-            borderRadius: '16px',
-          },
-          {
-            height: window.innerWidth < 1024 ? 'auto' : '560px',
-            borderRadius: '16px',
-            ease: 'none',
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power2.out',
             scrollTrigger: {
-              trigger: card,
-              start: 'top 88%',
-              end: 'top 25%',
-              scrub: 0.6,
-              invalidateOnRefresh: true,
-              fastScrollEnd: true,
+              trigger: row,
+              start: 'top 92%',
+              toggleActions: 'play none none reverse',
             },
           }
         )
@@ -209,14 +215,14 @@ const Projects = () => {
               className='flex flex-wrap items-center gap-6 sm:gap-10 font-[font5] text-[11px] sm:text-xs tracking-[0.2em] uppercase text-white/50 border-t lg:border-t-0 border-white/10 pt-4 lg:pt-0'
             >
               <div>
-                <span className='text-white font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
-                  06
+                <span className='font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
+                  08
                 </span>
                 <span>PRODUCTION BUILDS</span>
               </div>
               <span className='hidden sm:block w-[1px] h-5 bg-white/20' />
               <div>
-                <span className='text-white font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
+                <span className=' font-semibold font-[font3] text-xl sm:text-2xl text-[#F39A27] mr-2'>
                   100%
                 </span>
                 <span>OPEN SOURCE & LIVE</span>
@@ -224,25 +230,7 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Filter Pills */}
-          <div className='flex flex-wrap items-center gap-2 sm:gap-3 mt-10 pt-6 border-t border-white/[0.06]'>
-            <span className='font-[font5] text-[10px] uppercase tracking-[0.25em] text-white/40 mr-2'>
-              FILTER BY:
-            </span>
-            {filterTabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveFilter(tab)}
-                className={`font-[font5] text-[10px] sm:text-[11px] uppercase tracking-[0.2em] px-4 py-1.5 rounded-full transition-all duration-300 border cursor-pointer ${
-                  activeFilter === tab
-                    ? 'bg-[#F39A27] text-black border-[#F39A27] font-semibold shadow-[0_0_15px_rgba(243,154,39,0.25)]'
-                    : 'bg-white/[0.03] text-white/70 border-white/10 hover:border-white/30 hover:text-white'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+
 
         </div>
       </section>
@@ -252,30 +240,29 @@ const Projects = () => {
           ========================================================================= */}
       <section className='px-4 sm:px-8 lg:px-14 py-12 sm:py-20 relative z-10'>
         <div className='max-w-[1800px] mx-auto flex flex-col gap-10 sm:gap-14'>
-          {filteredProjects.map((elem, idx) => (
-            <div key={elem.rowNum || idx} className='flex flex-col gap-3'>
+          {projects.map((elem, idx) => (
+            <div key={elem.rowNum || idx} className='project-row-group flex flex-col gap-4'>
               
               {/* Row Header with Category and Number */}
-              <div className='flex items-center justify-between px-2 font-[font5] text-[11px] sm:text-xs tracking-[0.25em] uppercase text-white/40'>
+              <div className='flex items-center justify-between px-1 font-[font5] text-[11px] sm:text-xs tracking-[0.25em] uppercase text-white/40'>
                 <div className='flex items-center gap-3'>
-                  <span className='font-[font3] text-base text-[#F39A27] font-bold'>
+                  <span className='font-[font3] text-lg text-[#F39A27] font-bold'>
                     {elem.rowNum}
                   </span>
                   <span>/</span>
-                  <span className='text-white/70 font-medium'>
+                  <span className='text-white/80 font-medium tracking-widest'>
                     {elem.category}
                   </span>
                 </div>
-                <span className='hidden sm:inline text-white/30'>
-                  EXPAND & EXPLORE
-                </span>
+                <div className='hidden sm:flex items-center gap-2 text-white/30 text-[10px]'>
+                  <span>16:9 VIEWPORTS</span>
+                  <span>•</span>
+                  <span>CLICK TO EXPAND</span>
+                </div>
               </div>
 
-              {/* Card wrapper with GSAP height expand on scroll */}
-              <div
-                className='hero-card w-full overflow-hidden flex lg:flex-row flex-col lg:gap-5 gap-4 will-change-[height]'
-                style={{ height: '100px' }}
-              >
+              {/* 2-Column Responsive Grid with natural 16:9 aspect ratio */}
+              <div className='w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch'>
                 <ProjectCard
                   image1={elem.image1}
                   title1={elem.title1}
@@ -283,12 +270,14 @@ const Projects = () => {
                   link1={elem.link1}
                   description1={elem.description1}
                   github1={elem.github1}
+                  category1={elem.category1}
                   image2={elem.image2}
                   title2={elem.title2}
                   tags2={elem.tags2}
                   link2={elem.link2}
                   description2={elem.description2}
                   github2={elem.github2}
+                  category2={elem.category2}
                   onSelectProject={(projectData) => setSelectedProject(projectData)}
                 />
               </div>
