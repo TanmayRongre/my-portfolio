@@ -6,7 +6,6 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Navbar from './components/Navigation/Navbar'
 import FullScreenNav from './components/Navigation/FullScreenNav'
-import ScrollProgress from './components/common/ScrollProgress'
 import Footer from './components/common/Footer'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -45,6 +44,28 @@ const App = () => {
     }
   }, [])
 
+  // Preload all critical service & tech assets so they are cached in memory before navigation
+  useEffect(() => {
+    const assetsToPreload = [
+      '/services/fullstack.jpg',
+      '/services/uiux.jpg',
+      '/services/motion.jpg',
+      '/tech/cpp.png',
+      '/tech/react.png',
+      '/tech/node.png',
+      '/tech/java.svg',
+      '/tech/mongodb.png',
+      '/tech/html5.png',
+      '/tech/css3.svg',
+      '/tech/tailwind.png',
+    ]
+
+    assetsToPreload.forEach((src) => {
+      const img = new Image()
+      img.src = src
+    })
+  }, [])
+
   // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -53,7 +74,6 @@ const App = () => {
 
   return (
     <div className='overflow-x-hidden flex flex-col min-h-screen'>
-      <ScrollProgress />
       <Navbar />
       <FullScreenNav />
       <div className='flex-1'>

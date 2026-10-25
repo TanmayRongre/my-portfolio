@@ -6,14 +6,18 @@ import { TransitionContext } from '../common/Stairs'
 const Navbar = () => {
     const [navOpen, setNavOpen] = useContext(NavbarContext)
     const navigateWithTransition = useContext(TransitionContext)
-    const [isVisible, setIsVisible] = useState(true)
     const [isScrolled, setIsScrolled] = useState(false)
-    const lastScrollY = useRef(0)
+    const [scrollProgress, setScrollProgress] = useState(0)
     const location = useLocation()
 
     useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY
+        let ticking = false
+
+        const updateScrollAndProgress = () => {
+            const currentScrollY = window.scrollY || document.documentElement.scrollTop
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = docHeight > 0 ? Math.min(1, Math.max(0, currentScrollY / docHeight)) : 0
+            setScrollProgress(progress)
 
             // Activate glassmorphism blur once past initial scroll
             if (currentScrollY > 20) {
@@ -22,25 +26,37 @@ const Navbar = () => {
                 setIsScrolled(false)
             }
 
-            // Directional hide / show logic
-            if (currentScrollY < 60) {
-                setIsVisible(true)
-            } else if (currentScrollY > lastScrollY.current + 8) {
-                // Scrolling down -> hide
-                setIsVisible(false)
-            } else if (currentScrollY < lastScrollY.current - 8) {
-                // Scrolling up -> reveal
-                setIsVisible(true)
-            }
+            ticking = false
+        }
 
-            lastScrollY.current = currentScrollY
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateScrollAndProgress)
+                ticking = true
+            }
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true })
-        return () => window.removeEventListener('scroll', handleScroll)
+        window.addEventListener('resize', handleScroll)
+        updateScrollAndProgress()
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('resize', handleScroll)
+        }
     }, [])
 
-    const isDarkPage = location.pathname === '/' || location.pathname === '/contact'
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const currentScrollY = window.scrollY || document.documentElement.scrollTop
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = docHeight > 0 ? Math.min(1, Math.max(0, currentScrollY / docHeight)) : 0
+            setScrollProgress(progress)
+        }, 80)
+        return () => clearTimeout(timer)
+    }, [location.pathname])
+
+    const isDarkPage = location.pathname === '/' || location.pathname === '/contact' || location.pathname === '/projects' || location.pathname === '/services'
 
     const handleNavigate = (path) => {
         if (location.pathname === path) return
@@ -53,9 +69,7 @@ const Navbar = () => {
     return (
         <header
             className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ease-in-out ${
-                navOpen ? 'opacity-0 pointer-events-none -translate-y-4' : 'opacity-100'
-            } ${
-                isVisible ? 'translate-y-0' : '-translate-y-full'
+                navOpen ? 'opacity-0 pointer-events-none -translate-y-4' : 'opacity-100 translate-y-0'
             } ${
                 isScrolled
                     ? isDarkPage
@@ -71,21 +85,57 @@ const Navbar = () => {
                     onClick={() => handleNavigate('/')}
                     className='group flex items-center gap-3 cursor-pointer select-none'
                 >
-                    {/* Monogram Badge */}
-                    <div
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 border ${
-                            isDarkPage
-                                ? 'border-white/15 bg-white/[0.03] group-hover:border-[#F39A27] group-hover:bg-[#F39A27]/10'
-                                : 'border-black/15 bg-black/[0.03] group-hover:border-[#F39A27] group-hover:bg-[#F39A27]/10'
-                        }`}
-                    >
-                        <span
-                            className={`font-[font3] text-base sm:text-lg tracking-tight transition-colors duration-300 ${
-                                isDarkPage ? 'text-white' : 'text-black'
+                    {/* Monogram Badge with Circular Scroll Progress Rim */}
+                    <div className='relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0'>
+                        {/* SVG Circular Scroll Progress Rim */}
+                        <svg
+                            className='absolute -inset-[3px] w-[calc(100%+6px)] h-[calc(100%+6px)] -rotate-90 pointer-events-none'
+                            viewBox='0 0 48 48'
+                            aria-hidden='true'
+                        >
+                            {/* Inactive Background Track Rim */}
+                            <circle
+                                cx='24'
+                                cy='24'
+                                r='21.5'
+                                fill='none'
+                                stroke={isDarkPage ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.1)'}
+                                strokeWidth='2'
+                            />
+                            {/* Active Amber Scroll Progress Rim */}
+                            <circle
+                                cx='24'
+                                cy='24'
+                                r='21.5'
+                                fill='none'
+                                stroke='#F39A27'
+                                strokeWidth='2.2'
+                                strokeLinecap='round'
+                                strokeDasharray={135.09}
+                                strokeDashoffset={135.09 * (1 - scrollProgress)}
+                                className='transition-[stroke-dashoffset] duration-100 ease-out'
+                                style={{
+                                    filter: scrollProgress > 0.005 ? 'drop-shadow(0 0 4px rgba(243, 154, 39, 0.7))' : 'none',
+                                }}
+                            />
+                        </svg>
+
+                        {/* Monogram Core */}
+                        <div
+                            className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 border ${
+                                isDarkPage
+                                    ? 'border-white/10 bg-white/[0.03] group-hover:border-[#F39A27]/50 group-hover:bg-[#F39A27]/10'
+                                    : 'border-black/10 bg-black/[0.03] group-hover:border-[#F39A27]/50 group-hover:bg-[#F39A27]/10'
                             }`}
                         >
-                            T<span className='font-[font3] text-[#F39A27]'>R</span>
-                        </span>
+                            <span
+                                className={`font-[font3] text-base sm:text-lg tracking-tight transition-colors duration-300 ${
+                                    isDarkPage ? 'text-white' : 'text-black'
+                                }`}
+                            >
+                                T<span className='font-[font3] text-[#F39A27]'>R</span>
+                            </span>
+                        </div>
                     </div>
 
                     {/* Brand Name & Availability */}
