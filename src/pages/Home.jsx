@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { TransitionContext } from '../components/common/Stairs'
 
 import projects from '../data/projects'
+import ToolboxSection from '../components/home/ToolboxSection'
 
 
 
@@ -31,33 +32,63 @@ const Home = () => {
   const row3Ref = useRef(null)
   const row4Ref = useRef(null)
 
+  // Pinned How I Build (Method) Section Refs
+  const methodSectionRef = useRef(null)
+  const methodPinRef = useRef(null)
+  const activeRoadRef = useRef(null)
+  const travellerRef = useRef(null)
+  const stationRefs = useRef([])
+  const methodToolsRef = useRef(null)
+
   const navigateWithTransition = useContext(TransitionContext)
   const [activeProject, setActiveProject] = useState(0)
 
   const featuredProjects = projects
 
-  const pillars = [
+  const methodStations = [
     {
-      index: '01',
-      title: 'AI-Assisted Workflow',
-      subtitle: 'Autonomous Agent Pipelines & Rapid Spec Prototyping',
-      text: 'Harnessing advanced LLMs, autonomous coding agents, and AI-accelerated workflows to 10x iteration speed, draft bulletproof architectures, and ship complex production features in record time.',
-      tags: ['AI-Assisted Dev', 'LLM Agent Pipelines', 'Rapid Prototyping', 'Spec Engineering'],
+      num: '1',
+      title: 'Define',
+      desc: 'UNDERSTAND THE PROBLEM, USER CONTEXT, AND SYSTEM SCOPE.',
+      left: '7.5%',
+      top: '26.923%',
     },
     {
-      index: '02',
-      title: 'Hands-On Coding Knowledge',
-      subtitle: 'Deep Ground-Truth Engineering from DB to DOM',
-      text: 'AI proposes; rigorous engineering executes. Deep, foundational fluency across JavaScript, React, Node.js runtimes, database indexing, and performance optimization ensures clean, maintainable, production-ready code.',
-      tags: ['MERN Stack', 'Node.js', 'Clean Architecture', 'Debugging', 'Algorithms'],
+      num: '2',
+      title: 'Design',
+      desc: 'PLAN THE ARCHITECTURE, COMPONENT HIERARCHY, AND DATA FLOW.',
+      left: '27.5%',
+      top: '73.077%',
     },
     {
-      index: '03',
-      title: 'Creative Motion & Interaction',
-      subtitle: 'Fluid 60FPS Storytelling & High-Performance UI',
-      text: 'Harmonizing high-contrast typography, tailored dark modes, subtle glassmorphic depth, and GSAP physics-driven micro-animations tuned for speed, longevity, and conversion.',
-      tags: ['GSAP', 'ScrollTrigger', 'Lenis', 'Micro-Interactions', 'CSS3'],
+      num: '3',
+      title: 'Build',
+      desc: 'TRANSLATE BLUEPRINTS INTO ROBUST, HIGH-PERFORMANCE CODE.',
+      left: '50.0%',
+      top: '26.923%',
     },
+    {
+      num: '4',
+      title: 'Review',
+      desc: 'AUDIT LOGIC, TEST EDGE CASES, BENCHMARK SPEED, AND POLISH UX.',
+      left: '72.5%',
+      top: '73.077%',
+    },
+    {
+      num: '5',
+      title: 'Launch',
+      desc: 'DEPLOY TO PRODUCTION, CONNECT DOMAINS, AND MONITOR PERFORMANCE.',
+      left: '92.5%',
+      top: '26.923%',
+    },
+  ]
+
+  const methodTools = [
+    { name: 'System Architecture', role: 'SYSTEM DESIGN' },
+    { name: 'Full-Stack Core', role: 'MERN & NEXT.JS' },
+    { name: 'Performance', role: 'LOW LATENCY & OPTIMIZED' },
+    { name: 'Creative Motion', role: 'GSAP & INTERACTION' },
+    { name: 'Production Audit', role: 'ROBUST & SCALABLE' },
   ]
 
   // Helper to render alternating Amber and White letters across the endless train
@@ -183,25 +214,137 @@ const Home = () => {
       if (row4Ref.current) horizontalTl.to(row4Ref.current, { x: 300, ease: 'none' }, 0)
     }
 
-    // Scroll Trigger: Philosophy cards (Snappy, prompt entrance on scroll)
-    const pillarCards = gsap.utils.toArray('.pillar-card')
-    pillarCards.forEach((card) => {
-      gsap.fromTo(
-        card,
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.35,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 95%',
-            toggleActions: 'play none none reverse',
-          },
+    // =========================================================================
+    // HOW I BUILD (METHOD): Pinned Delivery Loop Animation
+    // Define is at the starting point of the curve (origin). Launch is at last.
+    // Each block appears ONLY when pointer arrives at its center of origin.
+    // Active road and pointer are locked in 1:1 mathematical sync (zero delay).
+    // =========================================================================
+    const methodSection = methodSectionRef.current
+    const methodPin = methodPinRef.current
+    const activeRoad = activeRoadRef.current
+    const traveller = travellerRef.current
+
+    if (methodSection && methodPin && activeRoad && traveller) {
+      let totalLength = 1455.12
+      try {
+        if (activeRoad.getTotalLength) {
+          const l = activeRoad.getTotalLength()
+          if (l > 100) totalLength = l
         }
-      )
-    })
+      } catch (e) {
+        totalLength = 1455.12
+      }
+
+      // Initialize road stroke to fully hidden
+      gsap.set(activeRoad, {
+        strokeDasharray: totalLength,
+        strokeDashoffset: totalLength,
+      })
+
+      // Traveller starts exactly at Define origin (90, 140)
+      gsap.set(traveller, {
+        attr: { transform: 'translate(90, 140)' },
+        opacity: 1,
+      })
+
+      // Exact arrival fractions where pointer reaches each station's center of origin
+      // 0: Define (0.0000 - at start)
+      // 1: Design (0.2433 - center of origin)
+      // 2: Build  (0.5000 - center of origin)
+      // 3: Review (0.7567 - center of origin)
+      // 4: Launch (0.9400 - at last)
+      const stationArrivals = [0.0, 0.2433, 0.5000, 0.7567, 0.9400]
+
+      // Initialize GSAP with xPercent: -50, yPercent: -50 to guarantee perfect center-of-origin alignment
+      stationRefs.current.forEach((st, idx) => {
+        if (!st) return
+        gsap.set(st, {
+          xPercent: -50,
+          yPercent: -50,
+          opacity: idx === 0 ? 1 : 0,
+          scale: idx === 0 ? 1 : 0.82,
+          y: idx === 0 ? 0 : 10,
+        })
+      })
+
+      if (methodToolsRef.current) {
+        gsap.set(methodToolsRef.current, { opacity: 0, y: 20 })
+      }
+
+      const methodTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: methodSection,
+          start: 'top top',
+          end: '+=180%',
+          pin: methodPin,
+          pinSpacing: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          anticipatePin: 0,
+        },
+      })
+
+      const tracker = { progress: 0 }
+
+      methodTl.to(tracker, {
+        progress: 1,
+        ease: 'none',
+        onUpdate: () => {
+          const p = tracker.progress
+
+          // 1. Draw glowing Amber road in exact pixel sync with pointer
+          activeRoad.style.strokeDashoffset = String(totalLength * (1 - p))
+
+          // 2. Move traveller dot along SVG wave in exact lockstep
+          try {
+            if (activeRoad.getPointAtLength) {
+              const pt = activeRoad.getPointAtLength(p * totalLength)
+              traveller.setAttribute('transform', `translate(${pt.x}, ${pt.y})`)
+            }
+          } catch (e) {}
+
+          // 3. Station appearance: EACH BLOCK APPEARS ONLY WHEN POINTER ARRIVES AT CENTER OF ORIGIN
+          // Define is visible at the starting point of the curve (idx 0).
+          // Design, Build, Review appear only when pointer reaches their exact center.
+          // Launch appears at the very last of the curve.
+          stationRefs.current.forEach((st, idx) => {
+            if (!st || idx === 0) return
+            const targetP = stationArrivals[idx]
+            if (p >= targetP) {
+              const factor = Math.min(1, Math.max(0, (p - targetP) / 0.045))
+              gsap.set(st, {
+                xPercent: -50,
+                yPercent: -50,
+                opacity: factor,
+                scale: 0.82 + factor * 0.18,
+                y: 10 * (1 - factor),
+              })
+            } else {
+              gsap.set(st, {
+                xPercent: -50,
+                yPercent: -50,
+                opacity: 0,
+                scale: 0.82,
+                y: 10,
+              })
+            }
+          })
+
+          // 4. Reveal bottom tool chips as traveller arrives at Launch (at the very last)
+          if (methodToolsRef.current) {
+            if (p >= 0.96) {
+              const factor = Math.min(1, Math.max(0, (p - 0.96) / 0.04))
+              methodToolsRef.current.style.opacity = String(factor)
+              methodToolsRef.current.style.transform = `translateY(${20 * (1 - factor)}px)`
+            } else {
+              methodToolsRef.current.style.opacity = '0'
+              methodToolsRef.current.style.transform = 'translateY(20px)'
+            }
+          }
+        },
+      })
+    }
   }, { scope: containerRef })
 
   // Smooth scroll to selected works section
@@ -544,60 +687,148 @@ const Home = () => {
       </section>
 
       {/* =========================================================================
-          SECTION 3: THREE PILLARS OF ENGINEERING
+          SECTION 3: HOW I BUILD (PINNED METHODOLOGY DELIVERY LOOP)
+          Sinusoidal curve with glowing Amber traveller and sequential station reveals.
+          Styled with PP Editorial New (font3 & font4 italic).
+          Small screens show compact pills with ONLY the stage names (Define, Design, etc).
           ========================================================================= */}
-      <section className='relative z-20 py-24 sm:py-32 px-5 sm:px-8 lg:px-16 border-t border-white/10 bg-black'>
-        <div className='max-w-3xl mb-16'>
-          <div className='font-[font5] text-xs uppercase tracking-[0.3em] text-[#F39A27] mb-2'>
-            [ ENGINEERING PRINCIPLES ]
-          </div>
-          <h2 className='font-[font3] text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white'>
-            How I Build Systems
-          </h2>
-          <p className='font-[font4] italic text-lg sm:text-xl text-white/60 mt-3'>
-            *Every interface is tuned for speed, longevity, and visual transcendence.*
-          </p>
-        </div>
+      <section
+        id='method'
+        ref={methodSectionRef}
+        className='relative z-20 bg-[#080808] text-white select-none border-t border-white/10'
+      >
+        <div
+          ref={methodPinRef}
+          className='h-screen w-full flex flex-col justify-between pt-20 sm:pt-24 pb-8 sm:pb-12 px-5 sm:px-8 lg:px-16 overflow-hidden'
+        >
+          {/* Top Section Header: PP Editorial Headline */}
+          <div className='max-w-6xl mx-auto w-full'>
+            <div className='flex items-center gap-2.5 text-[#F39A27] font-[font5] text-[10px] sm:text-xs tracking-[0.25em] uppercase font-semibold mb-2 sm:mb-3'>
+              <span className='w-2 h-2 rounded-full bg-[#F39A27] animate-pulse' />
+              <span>[ 03 / METHODOLOGY ]</span>
+            </div>
+            
+            <h2 className='text-4xl sm:text-5xl lg:text-7xl uppercase tracking-tight text-white leading-[0.95] max-w-4xl'>
+              <span className='font-[font3]'>AI-Assisted Builds. </span>
+              <span className='font-[font4] italic text-[#F39A27]'>Hands-On Coding.</span>
+            </h2>
 
-        {/* Pillars Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8'>
-          {pillars.map((pillar, idx) => (
-            <div
-              key={idx}
-              className='pillar-card rounded-3xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 hover:border-[#F39A27]/40 transition-all duration-500 flex flex-col justify-between group'
+            <p className='font-[font4] italic text-sm sm:text-base lg:text-lg text-white/60 mt-2 sm:mt-3'>
+              *A disciplined architectural loop from concept definition to production launch.*
+            </p>
+          </div>
+
+          {/* Center Stage: Sinusoidal Curve + 5 Delivery Stations */}
+          {/* Station 1 (Define) is the origin. Line flows: Define -> Design -> Build -> Review -> Launch */}
+          <div className='relative w-full my-auto h-[clamp(220px,32vh,360px)] max-w-6xl mx-auto'>
+            {/* SVG Wave */}
+            <svg
+              viewBox='0 0 1200 520'
+              preserveAspectRatio='none'
+              className='absolute inset-0 w-full h-full pointer-events-none'
+              fill='none'
             >
-              <div>
-                <span className='font-[font3] text-3xl text-[#F39A27] font-bold block mb-6'>
-                  {pillar.index}
+              {/* Inactive dark track: 10px stroke */}
+              <path
+                d='M90 140 C 190 140 230 380 330 380 S 500 140 600 140 S 770 380 870 380 S 1010 140 1110 140'
+                stroke='#1c1c1c'
+                strokeWidth='10'
+                strokeLinecap='round'
+              />
+
+              {/* Active glowing amber track: 10px stroke in exact lockstep with pointer */}
+              <path
+                ref={activeRoadRef}
+                d='M90 140 C 190 140 230 380 330 380 S 500 140 600 140 S 770 380 870 380 S 1010 140 1110 140'
+                stroke='#F39A27'
+                strokeWidth='10'
+                strokeLinecap='round'
+                className='filter drop-shadow-[0_0_8px_rgba(243,154,39,0.6)]'
+              />
+
+              {/* Glowing traveller node: perfect 1:1 circle regardless of non-uniform screen stretch */}
+              <g ref={travellerRef} transform='translate(90, 140)'>
+                <path
+                  d='M0 -0.01 L0 0.01'
+                  stroke='#FFFFFF'
+                  strokeWidth='24'
+                  strokeLinecap='round'
+                  vectorEffect='non-scaling-stroke'
+                  className='filter drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+                />
+                <path
+                  d='M0 -0.01 L0 0.01'
+                  stroke='#F39A27'
+                  strokeWidth='11'
+                  strokeLinecap='round'
+                  vectorEffect='non-scaling-stroke'
+                />
+              </g>
+            </svg>
+
+            {/* 5 Delivery Stations: Responsive (Small screen: pills showing ONLY words Define, Build, etc.) */}
+            {methodStations.map((st, idx) => (
+              <div
+                key={idx}
+                ref={(el) => (stationRefs.current[idx] = el)}
+                style={{ left: st.left, top: st.top }}
+                className='absolute rounded-full lg:rounded-[22px] bg-white text-black px-3.5 py-1.5 sm:px-4 sm:py-2 lg:p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-white flex flex-col items-center justify-center text-center select-none will-change-transform pointer-events-auto hover:brightness-105 transition-all duration-200 lg:w-[18%] lg:max-w-[220px]'
+              >
+                {/* Station Title: PP Editorial serif */}
+                <span className='font-[font3] text-xs sm:text-sm lg:text-[15px] font-bold tracking-wide uppercase text-black whitespace-nowrap'>
+                  {st.num} · {st.title}
                 </span>
-                <h3 className='font-[font3] text-2xl uppercase text-white mb-2 group-hover:text-[#F39A27] transition-colors'>
-                  {pillar.title}
-                </h3>
-                <h4 className='font-[font4] italic text-sm text-[#F39A27]/80 mb-4'>
-                  {pillar.subtitle}
-                </h4>
-                <p className='font-[font5] text-sm text-white/60 leading-relaxed mb-6'>
-                  {pillar.text}
+
+                {/* Description: Hidden on small screens! Shows ONLY on lg+ desktop */}
+                <p className='hidden lg:block font-[font5] text-[9.5px] xl:text-[10px] tracking-wider uppercase text-black/75 leading-relaxed font-semibold mt-1.5 max-w-[200px]'>
+                  {st.desc}
                 </p>
               </div>
+            ))}
+          </div>
 
-              <div className='flex flex-wrap gap-1.5 pt-4 border-t border-white/10'>
-                {pillar.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className='font-[font5] text-[10px] uppercase tracking-wider text-white/50 px-2 py-0.5 rounded bg-white/[0.03]'
-                  >
-                    {tag}
+          {/* Bottom Disciplines / Tools Row: Matching PP Editorial and Lausanne theme */}
+          <div
+            ref={methodToolsRef}
+            className='max-w-6xl mx-auto w-full flex flex-wrap items-center justify-between gap-4 select-none pt-2'
+          >
+            <ul className='flex flex-wrap items-center gap-2 sm:gap-2.5'>
+              {methodTools.map((tool, i) => (
+                <li
+                  key={i}
+                  className='flex items-center gap-2 rounded-full bg-[#121212] border border-white/10 px-3.5 sm:px-4 py-1.5 sm:py-2 hover:border-[#F39A27]/40 transition-colors'
+                >
+                  <span className='w-1.5 h-1.5 rounded-full bg-[#F39A27]' />
+                  <span className='font-[font3] text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white'>
+                    {tool.name}
                   </span>
-                ))}
-              </div>
-            </div>
-          ))}
+                  <span className='hidden sm:inline font-[font5] text-[9px] sm:text-[10px] uppercase tracking-wider text-white/50 font-medium'>
+                    {tool.role}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Action pill button */}
+            <button
+              onClick={scrollToWorks}
+              className='group inline-flex items-center gap-2.5 bg-[#F39A27] hover:bg-white text-black font-[font5] text-[11px] sm:text-xs uppercase tracking-wider font-bold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full shadow-lg transition-all duration-300 cursor-pointer active:scale-95'
+            >
+              <span>{featuredProjects.length} Projects</span>
+              <span className='w-1.5 h-1.5 rounded-full bg-black' />
+            </button>
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 4: MONUMENTAL CLOSING BANNER
+          SECTION 04: THE STACK / THE TOOLBOX
+          Categorized filterable pills matching the portfolio theme
+          ========================================================================= */}
+      <ToolboxSection />
+
+      {/* =========================================================================
+          SECTION 5: MONUMENTAL CLOSING BANNER
           Clean Black background without amber balls
           ========================================================================= */}
       <section id='contact' className='relative z-20 py-28 sm:py-36 px-5 sm:px-8 lg:px-16 border-t border-white/10 bg-black overflow-hidden'>
