@@ -1,10 +1,15 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useRef, useState, useEffect, useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { TransitionContext } from '../common/Stairs'
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [scrollProgress, setScrollProgress] = useState(0)
     const location = useLocation()
+    const navigate = useNavigate()
+    const navigateWithTransition = useContext(TransitionContext)
+
+    const isHomePage = location.pathname === '/'
 
     useEffect(() => {
         let ticking = false
@@ -53,15 +58,35 @@ const Navbar = () => {
     }, [location.pathname])
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        if (location.pathname !== '/') {
+            if (navigateWithTransition) {
+                navigateWithTransition('/')
+            } else {
+                navigate('/')
+            }
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+    }
+
+    const scrollToSection = (id) => {
+        if (id === 'home') {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            return
+        }
+        const el = document.getElementById(id)
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+        }
     }
 
     const scrollToContact = () => {
-        const el = document.getElementById('contact')
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' })
+        if (isHomePage) {
+            scrollToSection('contact')
+        } else if (navigateWithTransition) {
+            navigateWithTransition('/contact')
         } else {
-            window.location.href = 'mailto:tanmayrongre2008@gmail.com'
+            navigate('/contact')
         }
     }
 
@@ -69,11 +94,11 @@ const Navbar = () => {
         <header
             className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ease-in-out ${
                 isScrolled
-                    ? 'bg-black/75 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+                    ? 'bg-black/80 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
                     : 'bg-transparent border-b border-transparent'
             }`}
         >
-            <div className='max-w-[1920px] mx-auto px-5 sm:px-8 lg:px-12 h-16 sm:h-18 lg:h-20 flex items-center justify-between'>
+            <div className='relative max-w-[1920px] mx-auto px-5 sm:px-8 lg:px-12 h-16 sm:h-18 lg:h-20 flex items-center justify-between'>
                 
                 {/* ================= LEFT: Brand / Monogram Logo ================= */}
                 <div
@@ -139,6 +164,42 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* ================= CENTER: # Navigation Anchors (Home page ONLY - Perfectly Centered) ================= */}
+                {isHomePage && (
+                    <nav className='hidden md:flex items-center gap-1 sm:gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-inner absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10'>
+                        <button
+                            onClick={() => scrollToSection('home')}
+                            className='group px-3 py-1 rounded-full text-white/60 hover:text-white hover:bg-white/[0.06] transition-all font-[font5] text-[11px] sm:text-xs tracking-[0.18em] uppercase cursor-pointer'
+                        >
+                            <span className='text-[#F39A27] transition-colors group-hover:text-white mr-0.5'>#</span>home
+                        </button>
+                        <button
+                            onClick={() => scrollToSection('selected-works')}
+                            className='group px-3 py-1 rounded-full text-white/60 hover:text-white hover:bg-white/[0.06] transition-all font-[font5] text-[11px] sm:text-xs tracking-[0.18em] uppercase cursor-pointer'
+                        >
+                            <span className='text-[#F39A27] transition-colors group-hover:text-white mr-0.5'>#</span>works
+                        </button>
+                        <button
+                            onClick={() => scrollToSection('method')}
+                            className='group px-3 py-1 rounded-full text-white/60 hover:text-white hover:bg-white/[0.06] transition-all font-[font5] text-[11px] sm:text-xs tracking-[0.18em] uppercase cursor-pointer'
+                        >
+                            <span className='text-[#F39A27] transition-colors group-hover:text-white mr-0.5'>#</span>method
+                        </button>
+                        <button
+                            onClick={() => scrollToSection('skills')}
+                            className='group px-3 py-1 rounded-full text-white/60 hover:text-white hover:bg-white/[0.06] transition-all font-[font5] text-[11px] sm:text-xs tracking-[0.18em] uppercase cursor-pointer'
+                        >
+                            <span className='text-[#F39A27] transition-colors group-hover:text-white mr-0.5'>#</span>skills
+                        </button>
+                        <button
+                            onClick={() => scrollToSection('contact')}
+                            className='group px-3 py-1 rounded-full text-white/60 hover:text-white hover:bg-white/[0.06] transition-all font-[font5] text-[11px] sm:text-xs tracking-[0.18em] uppercase cursor-pointer'
+                        >
+                            <span className='text-[#F39A27] transition-colors group-hover:text-white mr-0.5'>#</span>contact
+                        </button>
+                    </nav>
+                )}
 
                 {/* ================= RIGHT: Get in Touch Action CTA ================= */}
                 <div className='flex items-center'>

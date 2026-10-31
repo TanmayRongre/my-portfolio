@@ -1,4 +1,5 @@
 ﻿import React, { useRef, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -41,6 +42,7 @@ const Home = () => {
   const methodToolsRef = useRef(null)
 
   const navigateWithTransition = useContext(TransitionContext)
+  const navigate = useNavigate()
   const [activeProject, setActiveProject] = useState(0)
 
   const featuredProjects = projects
@@ -388,6 +390,7 @@ const Home = () => {
           HERO SECTION (Fits 100% inside one screen frame on ALL displays)
           ========================================================================= */}
       <section
+        id='home'
         ref={heroRef}
         className='relative h-screen w-full flex flex-col justify-between pt-16 sm:pt-18 lg:pt-20 pb-4 overflow-hidden z-10'
       >
@@ -634,7 +637,7 @@ const Home = () => {
             {featuredProjects.map((item, idx) => (
               <div
                 key={item.id || idx}
-                onClick={() => window.open(item.link || item.github, '_blank')}
+                onClick={() => navigateWithTransition ? navigateWithTransition('/projects/' + item.id) : navigate('/projects/' + item.id)}
                 className='shrink-0 w-[74vw] sm:w-[52vw] md:w-[40vw] lg:w-[32vw] xl:w-[26vw] max-w-[420px] group relative rounded-xl sm:rounded-2xl p-2.5 sm:p-3 bg-[#0d0d0d] border border-white shadow-[0_30px_90px_rgba(0,0,0,0.95)] transform-gpu will-change-transform transition-transform duration-150 ease-out hover:-translate-y-2.5 flex flex-col justify-between overflow-hidden cursor-pointer pointer-events-auto'
               >
                 {/* Exact Aspect Ratio Viewport (1903x982 browser screenshots, 100% uncropped) */}
